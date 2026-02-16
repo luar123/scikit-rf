@@ -45,7 +45,6 @@ dependencies = [
 test = [
     "pytest >7.0",
     "pytest-mock >= 3.10",
-    "pytest-xdist >= 3.5.0",
     "coverage >=6.0",
     "pytest-cov >=4.0",
 ]
