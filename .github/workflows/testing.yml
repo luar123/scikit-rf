@@ -10,14 +10,14 @@ jobs:
       checks: write
       pull-requests: write
     strategy:
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
 
     steps:
     - uses: actions/checkout@v6
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
     - uses: astral-sh/setup-uv@v7
@@ -35,7 +35,7 @@ jobs:
       run: |
         uv pip install -e .[test,visa,netw,xlsx,plot,docs,testspice] --compile
         . .venv/bin/activate
-        python -m pytest --junitxml=test-results/junit-${{ matrix.python-version }}.xml --junit-prefix=${{ matrix.python-version }}
+        python -m pytest -n auto --junitxml=test-results/junit-${{ matrix.python-version }}.xml --junit-prefix=${{ matrix.python-version }} --dist loadfile
 
     - name: Upload Test Results
       if: always()
